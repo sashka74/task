@@ -20,7 +20,7 @@
 - name: import ip server
   lineinfile:
     path: "/srv/www/htdocs/index.html"
-    line: '{{ansible_all+ipv4_addresses}}'
+    line: '{{ansible_all_ipv4_addresses}}'
 
 - name: configuring firewall
   firewalld:

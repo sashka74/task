@@ -3,7 +3,7 @@
     name: nginx
     state: present
   notify:
-    - restart ngnix
+    - restart nginx
 
 - name: systemd nginx
   systemd:

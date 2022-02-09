@@ -1,0 +1,10 @@
+- name: restart nginx
+  systemd:
+    name: nginx
+    state: restarted
+    enabled: yes
+
+- name: reload firewalld
+  systemd:
+    name: firewalld
+    state: reloaded

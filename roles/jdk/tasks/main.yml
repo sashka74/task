@@ -1,0 +1,28 @@
+- name: removal jdk1.8
+  yum:
+    name: jdk1.8
+    state: absent
+
+- name: download jdk17
+  get_url:
+    url: "{{url}}"
+    dest: /opt/openjdk-17.0.2_linux-x64_bin.tar.gz
+
+- name: unarchive jdk17
+  unarchive:
+      src: /opt/openjdk-17.0.2_linux-x64_bin.tar.gz
+      dest: /opt/
+      remote_src: yes
+
+- name: set JAVA_HOME
+  lineinfile:
+    dest: /etc/environment
+    state: present
+    regexp: '^JAVA_HOME'
+    line: "JAVA_HOME=/opt/jdk-17.0.2"
+
+- name: update PATH
+  lineinfile:
+    dest: /etc/profile
+    state: present
+    line: "PATH=$JAVA_HOME/bin:$PATH"

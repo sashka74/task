@@ -1,0 +1,34 @@
+- name: install nginx
+  zypper:
+    name: nginx
+    state: present
+  notify:
+    - restart ngnix
+
+- name: systemd nginx
+  systemd:
+    name: nginx
+    enabled: yes
+    state: started
+
+- name: creat file index.html
+  ansible.builtin.file:
+    path: /srv/www/htdocs/index.html
+    mode: '0644'
+    state: touch
+
+- name: import ip server
+  lineinfile:
+    path: "/srv/www/htdocs/index.html"
+    line: '{{ansible_all+ipv4_addresses}}'
+
+- name: configuring firewall
+  firewalld:
+    port: 80/tcp
+    permanent: yes
+    state: enabled
+
+- name: reload service firewalld
+  systemd:
+    name: firewalld
+    state: reloaded

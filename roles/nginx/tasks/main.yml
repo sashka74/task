@@ -27,8 +27,6 @@
     port: 80/tcp
     permanent: yes
     state: enabled
+  notify:
+    - reload firewalld
 
-- name: reload service firewalld
-  systemd:
-    name: firewalld
-    state: reloaded
